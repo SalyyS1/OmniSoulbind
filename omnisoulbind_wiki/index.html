@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OmniSoulbind — Soulbound Items for Paper RPG</title>
+<style>
+  :root{
+    --bg:#0d120f;--surface:#141c17;--surface2:#1a241e;--ink:#f0eadc;--muted:#a9b4a8;
+    --line:rgba(215,226,207,.14);--amber:#f3b562;--cyan:#74d8d0;--coral:#ec806c;
+    --serif:Georgia,"Times New Roman",serif;--sans:"Segoe UI","Trebuchet MS",sans-serif;--mono:"Cascadia Code",Consolas,monospace;
+  }
+  *{box-sizing:border-box}html{scroll-behavior:smooth}
+  body{margin:0;color:var(--ink);font:16px/1.65 var(--sans);
+    background:radial-gradient(circle at 84% 6%,rgba(116,216,208,.12),transparent 26rem),radial-gradient(circle at 4% 18%,rgba(243,181,98,.09),transparent 28rem),linear-gradient(135deg,#0b100d,var(--bg) 52%,#101912)}
+  a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{width:min(1080px,calc(100% - 40px));margin:0 auto}
+  header{border-bottom:1px solid var(--line);padding:20px 0;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:11px}
+  .mark{width:34px;height:34px;display:grid;place-items:center;background:var(--amber);color:var(--bg);font:700 15px/1 var(--mono);clip-path:polygon(50% 0,100% 25%,88% 82%,50% 100%,12% 82%,0 25%)}
+  .brand b{font:700 13px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+  nav a{margin-left:18px;color:var(--muted);font:600 12px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+  .hero{padding:72px 0 48px}
+  .kicker{color:var(--amber);font:700 11px/1.2 var(--mono);letter-spacing:.18em;text-transform:uppercase}
+  h1{font:500 clamp(44px,7vw,88px)/.95 var(--serif);letter-spacing:-.04em;margin:16px 0 20px}
+  h1 em{color:var(--amber);font-style:italic}
+  .lede{max-width:640px;color:#c2cbbc;font-size:19px;margin-bottom:28px}
+  .badges{display:flex;gap:8px;flex-wrap:wrap}
+  .badge{border:1px solid var(--line);padding:6px 12px;font:600 11px/1 var(--mono);color:var(--muted)}
+  section{padding:44px 0;border-top:1px solid var(--line)}
+  h2{font:500 clamp(28px,4vw,44px)/1 var(--serif);letter-spacing:-.03em;margin:0 0 24px}
+  h3{font:600 18px/1.2 var(--sans);margin:28px 0 10px;color:var(--amber)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .card{border:1px solid var(--line);background:var(--surface);padding:22px}
+  .card h4{margin:0 0 8px;font:600 15px/1.2 var(--sans);color:var(--cyan)}
+  .card p{margin:0;color:var(--muted);font-size:14px}
+  pre{background:#0a0e0b;border:1px solid var(--line);padding:16px;overflow:auto;font:13px/1.5 var(--mono);color:#d7e2cf}
+  code{font:13px/1.4 var(--mono);color:var(--amber)}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+  th{color:var(--amber);font:700 12px/1 var(--mono);text-transform:uppercase;letter-spacing:.05em}
+  td code{color:var(--cyan)}
+  footer{padding:40px 0;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  ul{color:var(--muted)}li{margin:6px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand"><span class="mark">S</span><b>OmniSoulbind</b></div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#install">Install</a>
+      <a href="#commands">Commands</a>
+      <a href="#config">Config</a>
+      <a href="CHANGELOG.md">Changelog</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div class="kicker">SalyVn · Paper RPG Suite</div>
+    <h1>Items that are <em>yours</em> — kept on death, useless to thieves.</h1>
+    <p class="lede">OmniSoulbind stamps an item to a player's soul. Soulbound gear survives death, refuses to be picked up or used by anyone else, and carries a clean owner lore line. The binding lives entirely in the item's NBT — no database, no bloat, full Folia support.</p>
+    <div class="badges">
+      <span class="badge">Paper 1.21.11</span>
+      <span class="badge">Folia-ready</span>
+      <span class="badge">MMOItems optional</span>
+      <span class="badge">PlaceholderAPI optional</span>
+      <span class="badge">Kotlin</span>
+    </div>
+  </div>
+
+  <section id="features">
+    <h2>What it does</h2>
+    <div class="grid">
+      <div class="card"><h4>Keep on death</h4><p>A dying player's own soulbound items are pulled from the drop pile and handed back on respawn (or instantly, your call). Overflow drops safely at their feet.</p></div>
+      <div class="card"><h4>Anti-theft pickup</h4><p>Other players — and non-player entities — cannot pick up soulbound gear they don't own. Dropped loot stays untouchable to strangers.</p></div>
+      <div class="card"><h4>Use restriction</h4><p>Clicking or interacting with someone else's soulbound item is cancelled with a message. No borrowing, no stealing.</p></div>
+      <div class="card"><h4>MMOItems-aware auto-bind</h4><p>Auto-bind on pickup by MMOItems tier or a vanilla material list. Manual binding is always one command away.</p></div>
+      <div class="card"><h4>NBT-native, DB-free</h4><p>Owner UUID + name live in the item's PersistentDataContainer. Nothing to migrate, nothing to corrupt (KISS).</p></div>
+      <div class="card"><h4>Non-destructive lore</h4><p>A configurable "Soulbound to %owner%" lore line is appended without wiping existing lore, and never duplicated on re-scan.</p></div>
+    </div>
+  </section>
+
+  <section id="install">
+    <h2>Installation</h2>
+    <ol style="color:var(--muted)">
+      <li>Drop <code>OmniSoulbind-x.y.z.jar</code> into your server's <code>plugins/</code> folder.</li>
+      <li>Start the server once to generate <code>plugins/OmniSoulbind/config.yml</code>.</li>
+      <li>Tune your toggles, then run <code>/soulbind reload</code>.</li>
+    </ol>
+    <h3>Optional soft dependencies</h3>
+    <ul>
+      <li><b>MMOItems</b> — enables tier-based auto-bind (reads the item's stored tier).</li>
+      <li><b>PlaceholderAPI</b> — enables <code>%omnisoulbind_owner%</code> and <code>%omnisoulbind_bound%</code>.</li>
+    </ul>
+  </section>
+
+  <section id="commands">
+    <h2>Commands &amp; permissions</h2>
+    <table>
+      <tr><th>Command</th><th>Description</th><th>Permission</th></tr>
+      <tr><td><code>/soulbind</code></td><td>Bind the held item to yourself</td><td><code>omnisoulbind.use</code></td></tr>
+      <tr><td><code>/soulbind info</code></td><td>Show the owner of the held item</td><td><code>omnisoulbind.use</code></td></tr>
+      <tr><td><code>/soulbind remove</code></td><td>Strip binding from the held item</td><td><code>omnisoulbind.admin</code></td></tr>
+      <tr><td><code>/soulbind reload</code></td><td>Reload config</td><td><code>omnisoulbind.admin</code></td></tr>
+    </table>
+    <p style="color:var(--muted)">Alias: <code>/sb</code>. <code>omnisoulbind.use</code> defaults to <b>true</b>; <code>omnisoulbind.admin</code> defaults to <b>op</b>.</p>
+  </section>
+
+  <section id="config">
+    <h2>Configuration</h2>
+    <p style="color:var(--muted)">Every field is optional and falls back to a sensible default.</p>
+    <pre># Keep a player's own soulbound items instead of dropping them on death.
+keep-on-death: true
+# true  = hand items back on respawn
+# false = re-add immediately after the death event
+return-on-respawn: true
+
+# Stop other players (and mobs) from picking up items they don't own.
+restrict-pickup: true
+# Stop other players from clicking / interacting with items bound to someone else.
+restrict-use: true
+
+# Automatically bind matching items when a player picks them up.
+auto-bind:
+  enabled: false
+  # MMOItems tiers that trigger auto-bind (case-insensitive).
+  tiers:
+    - LEGENDARY
+    - MYTHICAL
+  # Vanilla materials that trigger auto-bind.
+  materials:
+    - NETHERITE_SWORD
+    - ELYTRA
+
+# Lore line appended to a bound item. %owner% = owner name.
+lore-line: "&7Soulbound to &e%owner%"
+
+messages:
+  bound: "&aBound this item to your soul."
+  already-bound: "&eThis item is already soulbound to &e%owner%&e."
+  no-item: "&cHold an item to soulbind it."
+  unbound: "&aRemoved the soulbinding from this item."
+  not-bound: "&7This item is not soulbound."
+  reloaded: "&aOmniSoulbind reloaded."
+  info: "&7Soulbound to &e%owner%&7."
+  use-denied: "&cThis item is soulbound to &e%owner%&c."</pre>
+    <h3>Placeholders</h3>
+    <table>
+      <tr><th>Placeholder</th><th>Returns</th></tr>
+      <tr><td><code>%omnisoulbind_owner%</code></td><td>Owner name of the held item, or empty</td></tr>
+      <tr><td><code>%omnisoulbind_bound%</code></td><td><code>true</code>/<code>false</code> for the held item</td></tr>
+    </table>
+  </section>
+
+  <footer>
+    <div class="wrap" style="width:auto;margin:0">
+      OmniSoulbind · part of the SalyVn OmniBundle RPG suite · Paper 1.21.11 · <a href="CHANGELOG.md">Changelog</a>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

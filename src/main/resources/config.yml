@@ -1,0 +1,53 @@
+# ============================================================================
+#  OmniSoulbind — configuration
+#  Bindings are stored inside each item's NBT (PDC), so there is no data file
+#  to manage. Only this config is loaded. Run /soulbind reload after editing.
+# ============================================================================
+
+# Keep a player's own soulbound items when they die instead of dropping them.
+keep-on-death: true
+
+# When keep-on-death is on:
+#   true  -> kept items are returned on respawn (recommended)
+#   false -> kept items are re-added to the inventory immediately at death
+return-on-respawn: true
+
+# Stop OTHER players from picking up soulbound items they don't own.
+restrict-pickup: true
+
+# Stop OTHER players from using / moving soulbound items they don't own
+# (inventory clicks + right/left-click interactions).
+restrict-use: true
+
+# ----------------------------------------------------------------------------
+#  Auto-bind: automatically soulbind items on pickup.
+#  Matches by MMOItems tier (read from the item's PDC) OR by vanilla material.
+#  When disabled, players bind manually with /soulbind.
+# ----------------------------------------------------------------------------
+auto-bind:
+  enabled: false
+  # MMOItems tier ids to auto-bind (case-insensitive). Requires MMOItems.
+  tiers:
+    - LEGENDARY
+    - MYTHICAL
+  # Vanilla materials to auto-bind (exact Bukkit Material names).
+  materials:
+    - NETHERITE_SWORD
+    - ELYTRA
+
+# Lore line appended to a soulbound item. %owner% = owner's name.
+# Supports legacy (&c), hex (&#RRGGBB) and MiniMessage (<yellow>) formats.
+lore-line: "&7Soulbound to &e%owner%"
+
+# ----------------------------------------------------------------------------
+#  Player-facing messages. %owner% is replaced where relevant.
+# ----------------------------------------------------------------------------
+messages:
+  bound: "&aBound this item to your soul."
+  already-bound: "&eThis item is already soulbound to &e%owner%&e."
+  no-item: "&cHold an item to soulbind it."
+  unbound: "&aRemoved the soulbinding from this item."
+  not-bound: "&7This item is not soulbound."
+  reloaded: "&aOmniSoulbind reloaded."
+  info: "&7Soulbound to &e%owner%&7."
+  use-denied: "&cThis item is soulbound to &e%owner%&c."

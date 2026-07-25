@@ -1,0 +1,25 @@
+name: OmniSoulbind
+version: ${version}
+main: com.salyvn.omnisoulbind.OmniSoulbindPlugin
+bootstrapper: com.salyvn.omnisoulbind.OmniSoulbindBootstrap
+api-version: "1.21"
+author: SalyVn
+description: Bind items to a player's soul — kept on death, un-tradeable, un-usable by others. MMOItems-aware.
+folia-supported: true
+
+dependencies:
+  server:
+    MMOItems:
+      load: BEFORE
+      required: false
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+
+permissions:
+  omnisoulbind.use:
+    description: Bind held items to yourself and view binding info
+    default: true
+  omnisoulbind.admin:
+    description: Admin commands (remove binding, reload)
+    default: op
