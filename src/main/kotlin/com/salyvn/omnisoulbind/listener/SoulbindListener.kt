@@ -63,7 +63,10 @@ class SoulbindListener(
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    // LOWEST so soulbound items are partitioned out of the drop list before any
+    // other death plugin (graves, corpse/soul systems) clones or clears it —
+    // otherwise those plugins capture soulbound items and keep-on-death breaks.
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     fun onDeath(event: PlayerDeathEvent) {
         if (!config.keepOnDeath) return
         val player = event.entity
